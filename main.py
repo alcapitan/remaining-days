@@ -2,14 +2,19 @@
 # My school's name : Terminale NSI - Lycée Saint-Louis à Orange
 # My school year : 2022/2023
 
+# Clear code :
+# import JeulinLib
+# JeulinLib.Connect("COM3")
+# JeulinLib.LCD_RGB_Clear()
+
 
 ## CONFIGURATION
 
 # If you have the appropriate Arduino board (the model is specified in the README), you can print the text on the Arduino.
-arduino_mode = False
+arduino_mode = True
 
 # Choose your language here
-lang = "en" # "en" for English, "fr" for French
+lang = "fr" # "en" for English, "fr" for French
 
 # Find the run() function to set an event at the end of the program.
 
@@ -98,4 +103,4 @@ def run(event_name=texts[lang]["retirement"], event_date=default_date):
 
 # Find the configuration on the top of the file
 # Write your event name and date here (the format is [year, month, day])
-run()
+run("le bac de philo", [2023, 6, 14])
