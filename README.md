@@ -1,7 +1,5 @@
 # Remaining days
 
-![Demo of the program on the appropriate Arduino device](demo_arduino.gif)
-
 ## What is it ?
 
 This is a Python program that calculates the number of days before an event.  
@@ -14,3 +12,7 @@ This program can print text in English or French.
 
 I coded this during my last days of computer classes in high school. It was intended for my teacher Mr. CHARNOZ.  
 By the way, the hidden feature of this program is that if you don't set any parameters in the `run()` function, it will target my teacher's retirement day because he was protesting for it.  
+
+## Demo
+
+![Demo of the program on the appropriate Arduino device](demo_arduino.gif)
