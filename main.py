@@ -1,14 +1,35 @@
 # Author : Alexandre BOYER
-# School : Terminale NSI - Lycée Saint-Louis à Orange
-# School year : 2022/2023
+# My school's name : Terminale NSI - Lycée Saint-Louis à Orange
+# My school year : 2022/2023
 
+
+## CONFIGURATION
+
+# If you have the appropriate Arduino board (the model is specified in the README), you can print the text on the Arduino.
+arduino_mode = False
+
+# Choose your language here
+lang = "en" # "en" for English, "fr" for French
+
+# Find the run() function to set an event at the end of the program.
+
+
+## PROGRAM
 
 import datetime
 from dateutil.relativedelta import relativedelta
 import time
 
-lang = "fr"
+# Set up the Arduino device
+if arduino_mode:
+    # Remind to install necessary Arduino stuff and connect the card
+    import JeulinLib
+    JeulinLib.Connect("COM3") # Check which COM port is used by your Arduino card
+    JeulinLib.LCD_RGB_Clear() # Clear the screen
+    JeulinLib.LCD_RGB_SetColor(92, 214, 92) # Set a blue-green background
+    JeulinLib.LCD_RGB_SetCusor(0, 0) # First line and first column
 
+# Translations
 texts = {
     "en": {
         "retirement": "the retirement",
@@ -20,23 +41,19 @@ texts = {
     },
 }
 
-# Default date if date reading failed
-default_date = datetime.date(1982, 7, 1)
-retirement_age = 64
+# Default date if run() is called without arguments
+default_date = datetime.date(1982, 7, 1) # Date of my teacher's birth
+retirement_age = 64 # Retirement age in France
 duration_work = relativedelta(years=retirement_age)
 default_date = default_date + duration_work
 default_date = [default_date.year, default_date.month, default_date.day]
 
-arduino_mode = False
-if arduino_mode:
-    import JeulinLib
-    JeulinLib.Connect("COM3")
-    JeulinLib.LCD_RGB_Clear()
-    JeulinLib.LCD_RGB_SetColor(255, 153, 153)
-    JeulinLib.LCD_RGB_SetCusor(0, 0)
-
-
 def print_arduino(prompt):
+    """
+        Print a text on the Arduino screen.
+        If the text is longer than the screen (16 boxes), then the text will scroll.
+        I copied this program made by a former student of my high school.
+    """
     while True:
         text = prompt
         if len(text) <= 16:
@@ -54,8 +71,13 @@ def print_arduino(prompt):
                 for i in liste:
                     text += i
 
-
+# Main function
 def run(event_name=texts[lang]["retirement"], event_date=default_date):
+    """
+        The counter is updated every 24 hours.
+        To stop the force program, press Ctrl + C on the keyboard at the same time (this keyboard shortcut works everywhere).
+        Warn if the event is over.
+    """
     while True:
         today = datetime.date.today()
         interval_days = datetime.date(
@@ -71,8 +93,9 @@ def run(event_name=texts[lang]["retirement"], event_date=default_date):
                 print_arduino(
                     f"{interval_days} {texts[lang]['sentence']} {event_name}")
 
-        # time.sleep(1)
         time.sleep(86400)  # 24 hours in seconds
 
 
-run("le bac de philo", [2023, 6, 14])
+# Find the configuration on the top of the file
+# Write your event name and date here (the format is [year, month, day])
+run()
